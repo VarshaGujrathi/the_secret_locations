@@ -1,0 +1,55 @@
+python -m virtualenv env ->to create virtualenv
+
+C:\Users\yasha\Desktop\Django>pip install virtualenv
+Defaulting to user installation because normal site-packages is not writeable
+Requirement already satisfied: virtualenv in c:\users\yasha\appdata\roaming\python\python312\site-packages (20.25.1)
+Requirement already satisfied: distlib<1,>=0.3.7 in c:\users\yasha\appdata\roaming\python\python312\site-packages (from virtualenv) (0.3.8)
+Requirement already satisfied: filelock<4,>=3.12.2 in c:\users\yasha\appdata\roaming\python\python312\site-packages (from virtualenv) (3.13.3)
+Requirement already satisfied: platformdirs<5,>=3.9.1 in c:\users\yasha\appdata\roaming\python\python312\site-packages (from virtualenv) (4.2.0)
+
+C:\Users\yasha\Desktop\Django>python -m virtualenv env	=>created virtual environment in django folder
+
+C:\Users\yasha\Desktop\Python_Django>cd env
+C:\Users\yasha\Desktop\Python_Django\env>cd Scripts
+C:\Users\yasha\Desktop\Python_Django\env\Scripts>activate ->to activate env in cmd
+
+(env) C:\Users\yasha\Desktop\Python_Django\env\Scripts>cd ..
+(env) C:\Users\yasha\Desktop\Python_Django\env>cd ..
+(env) C:\Users\yasha\Desktop\Python_Django>pip install Django -> after env activation install django 
+
+To check djangop in system
+(venv) C:\Users\yasha\Desktop\Django>python
+Python 3.12.1 (tags/v3.12.1:2305ca5, Dec  7 2023, 22:03:25) [MSC v.1937 64 bit (AMD64)] on win32
+Type "help", "copyright", "credits" or "license" for more information.
+>>> import django
+>>> django.__version
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+AttributeError: module 'django' has no attribute '__version'. Did you mean: '__version__'?
+>>> django.__version__
+'5.0.3'
+
+
+(env) C:\Users\yasha\Desktop\Python_Django>django-admin startproject secrete_location ->to start a project in django
+
+(env) C:\Users\yasha\Desktop\Python_Django\secrete_location>code . -> This will direct you to vs code. Open that above folder in vs code.
+
+(venv) C:\Users\yasha\Desktop\Django\locations>python manage.py startapp home	=> To start ap app to store functionality. Whenever you create a app don't forget to add that in your setting template folder.
+
+
+(venv) C:\Users\yasha\Desktop\Django\locations>python manage.py runserver	=>To run server
+
+python -m venv env	->-> to activate virtualenv in vs code
+env\Scripts\activate 
+
+
+
+__init__.py  => To read folder structure. for eg which files are contained by folder, to import and export them this init file is used.
+
+asgi.py (asynchronus gateway interface) =>
+
+wsgi (web server gateway interface) => 
+
+urls.py => Where we map all the urls
+
+settings.py => 

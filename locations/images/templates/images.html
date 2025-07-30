@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>newHome</title>
+    <style>
+        .navbar {
+            display: flex;
+            margin: 1rem;
+            padding: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .navbar h1 {
+            display: inline;
+            font-size: 4rem;
+            padding: 1rem 2rem;
+            margin: 1rem 2rem;
+        }
+
+        .logout-button {
+            border: 2px solid #00000038;
+            background-color: #edd5b6;
+            border-radius: 5px;
+            color: rgb(0 0 0 / 73%);
+            margin: 1rem 2rem;
+            padding: 1rem 2rem;
+            display: inline-block;
+            font-size: 1.5rem;
+            font-weight: 500;
+            cursor: pointer;
+        }
+
+        .button {
+            border: 2px solid #000000;
+            background-color: #D2B48C;
+            border-radius: 5px;
+            color: rgb(0, 0, 0);
+            padding: 13px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            font-weight: 700;
+            margin: 4px 2px;
+            cursor: pointer;
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+        }
+
+        .logout-button:hover,
+        .button:hover {
+            opacity: 0.8;
+        }
+
+
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(22rem, 1fr));
+            gap: 1rem;
+            justify-content: center;
+        }
+
+        .grid-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 1rem;
+            /* border: 1px solid #ddd;
+            border-radius: 1rem;
+            box-shadow: 0 0 1rem rgba(0, 0, 0, 0.1); */
+        }
+
+        .image {
+            width: 21rem;
+            height: 28rem;
+            object-fit: cover;
+            border-radius: 0.5rem;
+        }
+
+        .content {
+            padding: 0.5rem;
+            padding-bottom: 2rem;
+            text-align: center;
+        }
+
+        .place {
+            display: block;
+            padding: .5rem;
+            font-size: 2rem;
+            font-weight: 600;
+        }
+
+        .city {
+            display: block;
+            padding: .5rem;
+            font-size: 1.7rem;
+            font-weight: 500;
+        }
+
+        .map {
+            display: block;
+            padding: .5rem;
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+
+
+        /* Add media queries to adjust layout for smaller screens */
+
+        @media only screen and (max-width: 40rem) {
+            .grid-item {
+                min-width: 18rem;
+            }
+
+        }
+
+        @media only screen and (max-width: 30rem) {
+            .grid-item {
+                min-width: 15rem;
+            }
+
+        }
+    </style>
+</head>
+
+<body>
+    <div class="navbar">
+        <h1>Hello {{ e }}</h1>
+        <button class="logout-button" onclick="location.href='{% url 'logout' %}'">Logout</button>
+    </div>
+    <div class="grid-container">
+        {% for place, city, url, google_maps_url in det %}
+        <div class="grid-item">
+            <div class="image-container">
+                <img src="{{ url }}" alt="{{ place }}" class="image">
+            </div>
+            <div class="content">
+                <div class="place">
+                    {{ place }}
+                </div>
+                <div class="city">
+                    {{ city }}
+                </div>
+                <div class="map">
+                    <a href="{{ google_maps_url }}" target="_blank" class="map-button">View directions</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    <button class="button" type="button" onclick="location.href='{% url 'upload' %}'">Upload</button>
+</body>
+
+
+</html>

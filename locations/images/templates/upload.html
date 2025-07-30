@@ -1,0 +1,208 @@
+{% if alert %}
+<!-- <div class="alert">{{ alert }}</div> -->
+<script>
+    alert("{{alert}}")
+</script>
+{% endif %}
+
+<!-- {% if url %}
+    <div class="success">
+            <p>File uploaded successfully. View the location on Google Maps:</p>
+            <a href="{{ url }}" target="_blank">{{ url }}</a>
+    </div>
+{% endif %} -->
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>upload</title>
+    <style>
+        p {
+            font-size: 2rem;
+        }
+
+        form {
+            padding: 1rem 20%;
+            align-items: center;
+            display: flex;
+            flex-direction: column;
+        }
+
+        fieldset {
+            display: inline;
+            padding: 3rem;
+            padding-top: 1rem;
+            border: 1px solid black;
+            border-radius: 4px;
+            margin: .2rem;
+            align-items: center;
+        }
+
+        legend {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        label {
+            display: block;
+            font-size: 1.2rem;
+            margin: 2rem .5rem;
+        }
+
+        input[type="name"] {
+            margin: 0.3rem auto;
+            display: inline;
+            padding: 0.5rem;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 1rem;
+            width: 100%;
+        }
+
+        input[type="file"] {
+            margin: 0.3rem auto;
+            display: inline;
+            padding: 0.5rem;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 1rem;
+            width: 100%;
+        }
+
+        .sub {
+            text-align: center;
+        }
+
+        button[type="button"] {
+            background-color: #f4eda3;
+            color: rgb(0, 0, 0);
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1rem;
+            width: 50%;
+        }
+
+        button[type="button"]:hover {
+            background-color: #ffdcce;
+        }
+
+        input[type="submit"] {
+            background-color: #f4c6a3;
+            color: rgb(0, 0, 0);
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1.5rem;
+            margin-top: 1rem;
+            width: 40%;
+            font-weight: bold;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #ff7b47;
+        }
+
+        .alert {
+            background-color: #ff9800;
+            color: #fff;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+
+        .success {
+            background-color: #8bc34a;
+            color: #fff;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <form action="/process_upload/" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <p>
+            Share places you know with others
+        </p>
+        <fieldset>
+            <legend>Suggestion form</legend>
+            <label for="place">
+                Name of Place
+                <span class="required">*</span>
+                <input type="name" name="place" id="place" aria-required="true" required>
+            </label>
+
+            <label for="city">
+                Nearby City
+                <span class="required">*</span>
+                <input type="name" name="city" id="city" aria-required="true" required>
+            </label>
+
+            <label for="file[]">
+                Image of place
+                <span class="required">*</span>
+                <input type="file" name="file[]" accept="image/*" id="file" aria-required="true" required>
+                <button type="button" onclick="uploadImage()">Upload file</button><br><br>
+            </label>
+            <input type="hidden" name="url" id="url">
+            <div class="sub">
+                <input type="submit" value="Submit">
+            </div>
+        </fieldset>
+    </form>
+</body>
+
+
+<script src="https://www.gstatic.com/firebasejs/5.0.4/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/5.0.4/firebase-storage.js"></script>
+<script>
+    // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+    const firebaseConfig = {
+        apiKey: "AIzaSyCEky0Ts6zV55ubIamTc1bRuk44D3CBaPE",
+        authDomain: "secretelocations.firebaseapp.com",
+        databaseURL: "https://secretelocations-default-rtdb.asia-southeast1.firebasedatabase.app",
+        projectId: "secretelocations",
+        storageBucket: "secretelocations.appspot.com",
+        messagingSenderId: "548765638919",
+        appId: "1:548765638919:web:1796a95018cbfc72af65a2",
+        measurementId: "G-5Y0B1JTW7S"
+    };
+
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+
+    function uploadImage() {
+        var storage = firebase.storage();
+
+        var file = document.getElementById('file').files[0];
+
+        var storageRef = storage.ref();
+
+        var thisref = storageRef.child(file.name).put(file);
+
+        thisref.on('state_changed', function (snapshot) {
+            console.log("file uploaded successfully");
+        }, function (error) {
+            console.error("Upload failed:", error);
+        }, function () {
+            // Upload completed successfully, now we can get the download URL
+            thisref.snapshot.ref.getDownloadURL().then((downloadURL) => {
+                console.log('File available at', downloadURL);
+                document.getElementById("url").value = downloadURL;
+                alert("File uploaded");
+            });
+        });
+    }
+</script>
+
+</html>
